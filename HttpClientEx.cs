@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Open.IO;
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
@@ -38,7 +39,7 @@ namespace Open.Net.Http
 
         private const int CHUNKSIZE = 1024;
 
-        public static async Task<byte[]> ReadAsByteArrayAsync(this HttpContent content, CancellationToken cancellationToken, IProgress<HttpProgress> progress)
+        public static async Task<byte[]> ReadAsByteArrayAsync(this HttpContent content, CancellationToken cancellationToken, IProgress<BytesProgress> progress)
         {
             var length = content.Headers.ContentLength;
             using (var memoryStream = new MemoryStream())
@@ -55,7 +56,7 @@ namespace Open.Net.Http
                     {
                         bytesReceived += readBytes;
                         await memoryStream.WriteAsync(buffer, 0, readBytes);
-                        progress?.Report(new HttpProgress() { TotalBytesToReceive = length, BytesReceived = bytesReceived });
+                        progress?.Report(new BytesProgress(bytesReceived, length.Value));
                     }
                 }
                 while (readBytes > 0);
@@ -71,16 +72,5 @@ namespace Open.Net.Http
         {
             return new ByteArrayContent(new byte[0]);
         }
-    }
-
-    public class HttpProgress
-    {
-        public long? TotalBytesToReceive { get; set; }
-
-        public long BytesReceived { get; set; }
-
-        public long TotalBytesToSend { get; set; }
-
-        public long BytesSent { get; set; }
     }
 }
