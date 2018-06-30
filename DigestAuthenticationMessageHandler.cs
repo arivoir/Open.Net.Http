@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Open.Net.Http
 {
-    public class DigestAuthenticationFilter : RetryFilter
+    public class DigestAuthenticationMessageHandler : RetryMessageHandler
     {
         private DigestAuthentication _authentication;
         private string _parameter;
@@ -17,7 +17,7 @@ namespace Open.Net.Http
         private int _nc = 0;
         private NetworkCredential _credentials;
 
-        public DigestAuthenticationFilter(HttpMessageHandler innerHandler)
+        public DigestAuthenticationMessageHandler(HttpMessageHandler innerHandler)
             : base(innerHandler)
         {
         }

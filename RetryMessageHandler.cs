@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Open.Net.Http
 {
-    public class RetryFilter : DelegatingHandler
+    public class RetryMessageHandler : DelegatingHandler
     {
         private int _maxRetries;
 
-        public RetryFilter(int maxRetries = 5)
+        public RetryMessageHandler(int maxRetries = 5)
             : base()
         {
             _maxRetries = maxRetries;
         }
 
-        public RetryFilter(HttpMessageHandler innerHandler, int maxRetries = 5)
+        public RetryMessageHandler(HttpMessageHandler innerHandler, int maxRetries = 5)
             : base(innerHandler)
         {
             if (innerHandler == null)
