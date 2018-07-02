@@ -39,7 +39,7 @@ namespace Open.Net.Http
 
         private const int CHUNKSIZE = 1024;
 
-        public static async Task<byte[]> ReadAsByteArrayAsync(this HttpContent content, CancellationToken cancellationToken, IProgress<BytesProgress> progress)
+        public static async Task<byte[]> ReadAsByteArrayAsync(this HttpContent content, CancellationToken cancellationToken, IProgress<StreamProgress> progress)
         {
             var length = content.Headers.ContentLength;
             using (var memoryStream = new MemoryStream())
@@ -56,7 +56,7 @@ namespace Open.Net.Http
                     {
                         bytesReceived += readBytes;
                         await memoryStream.WriteAsync(buffer, 0, readBytes);
-                        progress?.Report(new BytesProgress(bytesReceived, length.Value));
+                        progress?.Report(new StreamProgress(bytesReceived, length.Value));
                     }
                 }
                 while (readBytes > 0);

@@ -12,13 +12,13 @@ namespace Open.Net.Http
     {
         private CancellationToken _cancellationToken;
         private Stream _fileStream;
-        private IProgress<BytesProgress> _progress;
+        private IProgress<StreamProgress> _progress;
 
         private class ContentStream : StreamWrapper
         {
-            private IProgress<BytesProgress> _progress;
+            private IProgress<StreamProgress> _progress;
             private long _position = 0;
-            public ContentStream(Stream stream, IProgress<BytesProgress> progress)
+            public ContentStream(Stream stream, IProgress<StreamProgress> progress)
                 : base(stream)
             {
                 _progress = progress;
@@ -27,11 +27,11 @@ namespace Open.Net.Http
             {
                 var readBytes = await base.ReadAsync(buffer, offset, count, cancellationToken);
                 _position += readBytes;
-                _progress?.Report(new BytesProgress(_position, Length));
+                _progress?.Report(new StreamProgress(_position, Length));
                 return readBytes;
             }
         }
-        public StreamedContent(Stream fileStream, IProgress<BytesProgress> progress, CancellationToken cancellationToken)
+        public StreamedContent(Stream fileStream, IProgress<StreamProgress> progress, CancellationToken cancellationToken)
         {
             _fileStream = fileStream;
             _progress = progress;
