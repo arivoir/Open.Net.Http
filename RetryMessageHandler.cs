@@ -10,9 +10,10 @@ namespace Open.Net.Http
     {
         private int _maxRetries;
 
-        public RetryMessageHandler(int maxRetries = 5)
+        public RetryMessageHandler(IHttpMessageHandlerFactory messageHandlerFactory = null, int maxRetries = 5)
             : base()
         {
+            InnerHandler = (messageHandlerFactory ?? HttpMessageHandlerFactory.Default).GetHttpMessageHandler();
             _maxRetries = maxRetries;
         }
 
