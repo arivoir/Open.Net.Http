@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Open.IO" Version="1.0.0-CI00004" />
+    <PackageReference Include="Open.IO" Version="1.0.0-CI00006" />
     <PackageReference Include="System.Net.Http" Version="4.3.3" />
   </ItemGroup>
 
