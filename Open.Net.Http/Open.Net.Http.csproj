@@ -5,6 +5,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Alvaro Rivoir</Authors>
     <Description>.Net Standard library containing extensions of System.Net.Http</Description>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
