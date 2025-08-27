@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,7 +28,7 @@ namespace Open.Net.Http
             try
             {
                 stream = await content.ReadAsStreamAsync();
-                var result = stream.DeserializeJson<T>();
+                var result = JsonSerializer.Deserialize<T>(stream);
                 return result;
             }
             finally
