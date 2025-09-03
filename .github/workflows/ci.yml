@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    environment: Testing
+    env:
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x' # or your version
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Run NUnit tests
+        run: dotnet test --configuration Release --no-build --logger "trx;LogFileName=test_results.trx"

@@ -43,7 +43,9 @@ namespace Open.Net.Http
         }
         protected override async Task SerializeToStreamAsync(Stream stream, TransportContext context)
         {
-            await _fileStream.CopyToAsync(stream, progress: _progress, flush: true, cancellationToken: _cancellationToken);
+            if (_fileStream.CanSeek)
+                _fileStream.Seek(0, SeekOrigin.Begin);
+            await _fileStream.CopyToAsync(stream, progress: _progress, flush: false, cancellationToken: _cancellationToken);
         }
 
         protected override bool TryComputeLength(out long length)
