@@ -45,7 +45,7 @@ namespace Open.Net.Http
         {
             if (_fileStream.CanSeek)
                 _fileStream.Seek(0, SeekOrigin.Begin);
-            await _fileStream.CopyToAsync(stream, progress: _progress, flush: false, cancellationToken: _cancellationToken);
+            await _fileStream.CopyToAsync(stream, progress: _progress, flush: true, cancellationToken: _cancellationToken);
         }
 
         protected override bool TryComputeLength(out long length)
